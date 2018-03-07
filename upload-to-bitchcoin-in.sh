@@ -6,5 +6,5 @@ lein cljsbuild once
 
 for i in bower_components di-songs.html fonts index.html js css main.js
 do
-  rsync -arzv "$i" deploy@bitchcoin.in:/var/www/bitchcoin-in-production
+  rsync -arzv "$i" deploy@myfutures.trade:/var/www/bitchcoin-in-production
 done
