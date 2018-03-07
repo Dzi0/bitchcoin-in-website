@@ -96,7 +96,8 @@ body {
     text-decoration: underline dashed darken($primary-color, 30%);
 
     // border-bottom: thin dashed darken($primary-color, 40%);
-    &:hover {
+    &:hover,
+    &.active {
       color: $secondary-color;
       text-decoration: line-through solid $secondary-color;
     }
@@ -104,15 +105,21 @@ body {
 }
 
 article {
-  // @extend .row;
-  // @extend .expanded;
+  @extend .row;
+  @extend .expanded;
 
   p {
     @extend .row;
     @extend .small-12;
     @extend .medium-8;
     @extend .large-6;
+    @extend .medium-offset-2;
+    @extend .large-offset-3;
     @extend .columns;
+
+    &:last-child {
+      @extend .end;
+    }
   }
 }
 
@@ -124,7 +131,7 @@ article {
   right: 0;
 }
 
-ul#playlist {
+ul.playlist {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -144,30 +151,29 @@ ul#playlist {
     // height: 5px;
     float: left;
 
-    // @include circle(40px);
 
-    a {
-      display: block;
+    button {
       @include circle(0.75em);
 
       @include breakpoint(medium) {
         @include circle(1em);
       }
 
-
-      // width: 40px;
-      // height: 5px;
-
-      // background-color: lighten($secondary-color, 20%);
-      // float: left;
+      cursor: pointer;
       border: 1px solid white;
+
+      &:focus {
+        outline:0;
+      }
     }
+    // @include circle(40px);
+
 
     margin-right: 8px;
     margin-bottom: 5px;
 
     &.active {
-      a {
+      button {
         background-color: cyan;
         -webkit-animation: bkg-color-change 0.2s infinite;
         -moz-animation: bkg-color-change 0.2s infinite;

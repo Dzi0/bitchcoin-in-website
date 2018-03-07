@@ -16,86 +16,17 @@
 
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/app.js"></script>
+    <!-- <script src="js/app.js"></script> -->
+    <script src="main.js"></script>
   </head>
   <body>
-    <audio class="audio-controls" controls="controls">
+    <audio id="audio-player" class="audio-controls" controls="controls">
       <!-- <source src="track.ogg" type="audio/ogg" /> -->
-      <source id="mp3-src" src="track.mp3" type="audio/mpeg" />
+      <source id="mp3-src" src="music/Not%20Waving%20-%20Me%20Me%20Me.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
 
-    <ul id="playlist">
-      <li><a href="music/Not%20Waving%20-%20Me%20Me%20Me.mp3"></a></li>
-      <li><a href="music/SHXCXCHCXSH%20-%20SsSsSsSsSsSsSsSsSs.mp3"></a></li>
-      <li class="active"><a href="music/Prurient%20-%20I%20Have%20A%20Message%20For%20You.mp3"></a></li>
-      <li><a href="music/MikeQ%20-%20Just%20for%20you.mp3"></a></li>
-      <li><a href="music/Anika%20-%20Masters%20of%20War.mp3"></a></li>
-      <li><a href="music/Fatima%20Al%20Qadiri%20-%20War%20Games.mp3"></a></li>
-      <li><a href="music/Cigarettes%20After%20Sex%20-%20Nothing%27s%20Gonna%20Hurt%20You%20Baby.mp3"></a></li>
-      <li><a href="music/Fatima%20Al%20Qadiri%20-%20How%20Can%20I%20Resist%20U.mp3"></a></li>
-      <li><a href="music/Appetite%20-%20Anxiety.mp3"></a></li>
-      <li><a href="music/Gesaffelstein%20-%20Nameless.mp3"></a></li>
-      <li><a href="music/LSDXOXO%20-%20TECHNOLOGIC%20%28REMIX%29.mp3"></a></li>
-      <li><a href="music/WWWINGS,%20111X%20&amp;%20BUNGALOV%20-%20Infinite%20Machine.mp3"></a></li>
-      <li><a href="music/Kuedo%20-%20Visioning%20Shared%20Tomorrows.mp3"></a></li>
-      <li><a href="music/Lenny%20Dee%20-%20The%20Dreamer.mp3"></a></li>
-      <li><a href="music/Perfume%20-%20Computer%20City.mp3"></a></li>
-      <li><a href="music/Kuedo%20-%20Work,%20Live%20and%20Sleep%20in%20Collapsing%20Space.mp3"></a></li>
-      <li><a href="music/Ecferus%20-%20Fragmented%20Body.mp3"></a></li>
-      <li><a href="music/Loke%20Rahbek%20&amp;%20Puce%20Mary%20-%20The%20Female%20Form.mp3"></a></li>
-      <li><a href="music/Boy%20Harsher%20-%20Yr%20Body%20Is%20Nothing.mp3"></a></li>
-      <li><a href="music/ALEKSEI%20TARUTS%20-%20tsunami.mp3"></a></li>
-      <li><a href="music/Devika%20Shawty%20-%20Abyss%20%28feat.%20Delta%20X%29.mp3"></a></li>
-      <li><a href="music/Pharmakon%20-%20Vacuum.mp3"></a></li>
-      <li><a href="music/Hmot%20-%20I%20Have%20Been%20To%20Hell%20And%20Back%20And%20Let%20Me%20Tell%20You,%20It%20Was%20Beautiful.mp3"></a></li>
-      <li><a href="music/Haus%20Arafna%20-%20Heart%20Beats%20Blood%20Flows.mp3"></a></li>
-      <li><a href="music/Helena%20Hauff%20-%20Culmination%20Of%20Frustration.mp3"></a></li>
-      <li><a href="music/Evian%20Christ%20-%20Fuck%20It.mp3"></a></li>
-      <li><a href="music/Eomac%20-%20We%20Are%20All%20Going%20to%20Die.mp3"></a></li>
-      <li><a href="music/Helena%20Hauff%20-%20We%20Only%20Want%20Tragedy.mp3"></a></li>
-      <li><a href="music/Hmot%20-%20Count%20To%20Ten.mp3"></a></li>
-      <li><a href="music/Coucou%20Chloe%20-%20Stealth%20%28feat.%20WWWINGS%29.mp3"></a></li>
-      <li><a href="music/Cheena%20-%20Did%20I%20Tell%20You%20Last%20Night.mp3"></a></li>
-      <li><a href="music/Cut%20Hands%20-%20Madwoman.mp3"></a></li>
-      <li><a href="music/Hypnoskull%20vs.%20Tunnel%20-%20Damn%27%20Shit%21.mp3"></a></li>
-      <li><a href="music/Helena%20Hauff%20-%20Do%20You%20Really%20Think%20Like%20That_.mp3"></a></li>
-      <li><a href="music/Hypnoskull%20-%20Fuck%20You,%20And%20Fuck%20Your%20Moral.mp3"></a></li>
-      <li><a href="music/Hypnoskull%20-%20Incredibly%20Agressive.mp3"></a></li>
-      <li><a href="music/Prurient%20-%20Historically,%20Women%20Use%20Poison%20To%20Kill.mp3"></a></li>
-      <li><a href="music/111X%20-%20Social%20Exclusion.mp3"></a></li>
-      <li><a href="music/Charli%20XCX%20-%20Femmebot%20%28feat.%20Dorian%20Electra%20and%20Mykki%20Blanco%29.mp3"></a></li>
-      <li><a href="music/Acid%20Jesus%20-%20Elektrosmog.mp3"></a></li>
-      <li><a href="music/Ekman%20-%20I%20Am%20Not%20A%20Turing%20Machine,%20You%20Are.mp3"></a></li>
-      <li><a href="music/M.E.S.H.%20-%20Follow%20&amp;%20Mute.mp3"></a></li>
-      <li><a href="music/FALSE%20PRPHT%20-%20DELETE%20MY%20INTERNET%20BROWSER%20HISTORY.mp3"></a></li>
-      <li><a href="music/Sissy%20Nobby%20-%20Bbhhm.mp3"></a></li>
-      <li><a href="music/Pharmakon%20-%20No%20Natural%20Order.mp3"></a></li>
-      <li><a href="music/Gesaffelstein%20-%20Depravity.mp3"></a></li>
-      <li><a href="music/Mykki%20Blanco%20-%20Punish%20me%20for%20Fun.mp3"></a></li>
-      <li><a href="music/DJ%20Delirium%20-%20Never%20Gonna%20Stop.mp3"></a></li>
-      <li><a href="music/Sissy%20Nobby%20-%20Bbhhm.mp3"></a></li>
-      <li><a href="music/Sutcliffe%20Ju%CC%88gend%20-%20Nothing%20Has%20Changed.mp3"></a></li>
-      <li><a href="music/sega%20bodega%20-%20have%20u_.mp3"></a></li>
-      <li><a href="music/Hypnoskull%20-%20Desire.mp3"></a></li>
-      <li><a href="music/Croatian%20Amor%20and%20Lust%20For%20Youth%20-%20Sister%28Club%20Mix%29.mp3"></a></li>
-      <li><a href="music/Internazionale%20-%20Pleasure%20And%20Shame.mp3"></a></li>
-      <li><a href="music/Perturbator%20-%20Future%20Club.mp3"></a></li>
-      <li><a href="music/Evian%20Christ%20-%20That%27s%20Me.mp3"></a></li>
-      <li><a href="music/Haus%20Arafna%20-%20Paranoia.mp3"></a></li>
-      <li><a href="music/Gesaffelstein%20-%20Obsession.mp3"></a></li>
-      <li><a href="music/_vtol_%20-%20end.mp3"></a></li>
-      <li><a href="music/Abyss%20X%20-%20Couldn%27t%20Care%20Less.mp3"></a></li>
-      <li><a href="music/Sissel%20Wincent%20-%20Tricky%20Question%20Why.mp3"></a></li>
-      <li><a href="music/Halcyon%20Veil%20-%20Toxe%20Xic.mp3"></a></li>
-      <li><a href="music/Sega%20Bodega%20-%20Bush%20Baby.mp3"></a></li>
-      <li><a href="music/Patricia%20-%20The%20Words%20Are%20Just%20Sounds.mp3"></a></li>
-      <li><a href="music/wolf%20eyes%20-%20no%20answer.mp3"></a></li>
-      <li><a href="music/Croatian%20Amor%20-%20Love%20Means%20Taking%20Action.mp3"></a></li>
-      <li><a href="music/Grebenstein%20-%20No%20You%20Dont.mp3"></a></li>
-      <li><a href="music/Not%20Waving%20-%20I%20Know%20I%20Know%20I%20Know.mp3"></a></li>
-      <li><a href="music/sega%20bodega%20-%20cc%20%28feat.%20shygirl%29.mp3"></a></li>
-    </ul>
+    <div id="app-root"></div>
 
     <article>
       <p>
@@ -181,5 +112,7 @@
         anyone! </p>
       <p>XXX</p>
     </article>
+
+    <script>bitchcoin_in_website.core.init()</script>
   </body>
 </html>
