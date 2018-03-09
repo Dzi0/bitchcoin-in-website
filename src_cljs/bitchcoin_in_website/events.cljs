@@ -16,6 +16,13 @@
  (fn [_]
    (console :log :initialize)
 
+   ;; grab all songs from article
+   (.each (js/$ "article a")
+          (fn []
+            (this-as self
+              (db/add-music-url (.. (js/$ self)
+                                    (attr "href"))))))
+
    {:db (db/default-db)
     :dispatch [:player/change-song 0]}))
 
