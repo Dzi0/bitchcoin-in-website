@@ -4,9 +4,9 @@
 
                  [enfocus "2.1.1"]
 
-                 [reagent "0.6.2"]
+                 [reagent "0.8.0-alpha2"]
                  [reagent-utils "0.3.1"]
-                 [re-frame "0.9.2"]]
+                 [re-frame "0.10.5"]]
   :plugins [[lein-figwheel "0.5.13"]]
   :clean-targets [:target-path "out"]
 
@@ -59,7 +59,7 @@
                     :source-paths ["src_cljs"]
                     :compiler {:main bitchcoin-in-website.core
                                :output-to "resources/public/js/compiled/main.js"
-                               :optimizations :advanced
+                               :optimizations :simple
                                :pretty-print true
                                :pseudo-names true}}}}}
    })
