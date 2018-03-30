@@ -29,7 +29,7 @@
 ;;; watch scss files
 ;;;
 ;;;
-;;; sass -I ../bower_components/foundation-sites/scss . app.scss app.css
+;;; sass --watch -I ../bower_components/foundation-sites/scss -I . app.scss
 ;;;
 ;;; make playlist from lst of songs
 ;;;
