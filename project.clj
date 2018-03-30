@@ -1,12 +1,12 @@
 (defproject bitchcoin-in-website "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.9.908"]
+                 [org.clojure/clojurescript "1.9.946"]
 
                  [enfocus "2.1.1"]
 
-                 [reagent "0.6.2"]
+                 [reagent "0.8.0-alpha2"]
                  [reagent-utils "0.3.1"]
-                 [re-frame "0.9.2"]]
+                 [re-frame "0.10.5"]]
   :plugins [[lein-figwheel "0.5.13"]]
   :clean-targets [:target-path "out"]
 
@@ -29,13 +29,6 @@
               [lein-cljsbuild "1.1.7"]]
 
     :source-paths ["src_cljs" "env/dev"]
-    ;;
-    ;; generate index.html
-    ;;
-    ;; :filegen-ng [{:data {:template ~(slurp "resources/public/index_tpl.html")
-    ;;                      :version ~(fn [p] (:version p))}
-    ;;               :template-fn ~(fn [p d] (:template d))
-    ;;               :target "resources/public/index.html"}]
 
     ;;
     ;; build cljs
@@ -52,4 +45,21 @@
                                      :preloads [devtools.preload]
                                      :closure-defines {goog.DEBUG true}}}]}
 
-    }})
+    }
+   ;;
+   ;; production
+   ;;
+   :production
+   {:plugins [[lein-cljsbuild "1.1.7"]]
+    :omit-source true
+    :aot :all
+    :main bitchcoin-in-website.core
+    :cljsbuild
+    {:builds {:app {:id "production"
+                    :source-paths ["src_cljs"]
+                    :compiler {:main bitchcoin-in-website.core
+                               :output-to "resources/public/js/compiled/main.js"
+                               :optimizations :simple
+                               :pretty-print true
+                               :pseudo-names true}}}}}
+   })
