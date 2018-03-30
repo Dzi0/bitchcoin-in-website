@@ -6,7 +6,8 @@
 
                  [reagent "0.8.0-alpha2"]
                  [reagent-utils "0.3.1"]
-                 [re-frame "0.10.5"]]
+                 [re-frame "0.10.5"]
+                 [jayq "2.5.4"]]
   :plugins [[lein-figwheel "0.5.13"]]
   :clean-targets [:target-path "out"]
 
@@ -37,7 +38,7 @@
                           :source-paths ["src_cljs"]
                           :figwheel {:on-jsload "bitchcoin-in-website.core/mount-root"}
                           :compiler {:main ^:skip-aot bitchcoin-in-website.core
-                                     :output-to "main.js" ; FIXME
+                                     :output-to "js/compiled/out/main.js" ; FIXME
                                      :output-dir "resources/public/js/compiled/out"
                                      :asset-path "/js/compiled/out"
                                      :source-map-timestamp true
