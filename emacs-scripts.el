@@ -12,6 +12,20 @@
 
 ;;;
 ;;;
+;;; extract songs and copy them to tmp-music dir
+;;;
+;;;
+;; cat di-songs.html| grep -Eoi '<a [^>]+>' | grep -Eo 'href="[^\"]+"' |  grep -Eo '(music/)[^/"]+' | ruby -e 'require "uri"; STDIN.each_line {|l| print(URI.unescape(l.chomp) + "\0")}' | xargs -0 -I % sh -c 'cp -v "%" tmp-music'
+
+;;;
+;;;
+;;; deploy tmp-music to the server
+;;;
+;;;
+;; rsync -avz tmp-music/* deploy@myfutures.trade:/var/www/bitchcoin-in-production/music
+
+;;;
+;;;
 ;;; start local server to serve files with symlinks to music
 ;;;
 ;;;
