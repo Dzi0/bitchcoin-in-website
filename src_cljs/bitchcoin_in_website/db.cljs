@@ -47,10 +47,11 @@
 (defn- default-playlist []
   (into {} (map #(hash-map %2 (default-song %1 %2)) @music-urls (range))))
 
-(defn- default-db []
+(defn default-db [click-task]
   {:playlist (default-playlist)
    :active-song-id nil
-   :paused? false})
+   :paused? false
+   :click-task click-task})
 
 
 ;;;
@@ -64,3 +65,8 @@
 
 (defn add-music-url [url]
   (swap! music-urls #(conj % url)))
+
+(defn set-click-task [db click-task]
+  (let [click-task-atom (:click-task db)]
+    (reset! click-task-atom click-task)
+    db))

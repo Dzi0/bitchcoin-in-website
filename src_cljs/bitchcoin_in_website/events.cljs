@@ -4,7 +4,9 @@
 
    [jayq.core :as jq :refer [$ css html outer-height attr]]
 
-    [bitchcoin-in-website.db :as db]
+   [bitchcoin-in-website.db :as db]
+
+   [bitchcoin-in-website.audio :as audio]
 
    [bitchcoin-in-website.interceptors :refer [interceptors
                                               interceptors-fx]]))
@@ -15,7 +17,7 @@
 
  (interceptors-fx :spec true)
 
- (fn [_]
+ (fn [_ [click-task-atom]]
    (console :log :initialize)
 
    ;; grab all songs from article
@@ -25,8 +27,12 @@
               (db/add-music-url (.. (js/$ self)
                                     (attr "href"))))))
 
-   {:db (db/default-db)
-    :dispatch [:player/change-song 0]}))
+   (cond-> {:db (db/default-db click-task-atom)}
+     (not js/isMobile)
+     (merge {:dispatch-n [[:ui.splash/hide]
+                          [:player/change-song 0]]}))))
+     ;; TODO: if not mobile start here!
+                                        ;:dispatch [:player/change-song 0]
 
 
 ;;;
@@ -142,6 +148,31 @@
 
      {})))
 
+;;;
+;;;
+;;; SPLASH SCREEN EVENTS
+;;;
+;;;
+
+(reg-event-fx
+ :ui.splash/click
+
+ (interceptors-fx :spec false)
+
+ (fn [{:keys [db]}]
+   {:dispatch-n [[:ui.splash/hide]
+                 [:player/change-song 0]]}))
+
+(reg-event-fx
+ :ui.splash/hide
+
+ (interceptors-fx :spec false)
+
+ (fn [{:keys [db]}]
+   (-> ($ :#splash)
+       (jq/add-class "hidden"))
+   {}))
+
 
 ;;;
 ;;;
@@ -236,12 +267,14 @@
  (interceptors-fx :spec false)
 
  (fn [{:keys [db]} [song-id]]
-   (let [url (get-in db [:playlist song-id :url])
-         audio (.getElementById js/document "audio-player")]
-     (aset audio "src" url)
-     (.load audio)
-     (.play audio))
-   {}))
+   (let [url (get-in db [:playlist song-id :url])]
+     (console :log :player/do-start url)
+     
+     (if js/isMobile
+       (reset! (:click-task db) (fn [] (audio/load-and-play url)))
+       (audio/load-and-play url))
+     {}
+     #_(db/set-click-task db (partial audio/load-and-play url)))))
 
 
 ;;;
@@ -253,8 +286,10 @@
  (interceptors-fx :spec false)
 
  (fn [{:keys [db]}]
-   (let [audio (.getElementById js/document "audio-player")]
-     (.pause audio))))
+   (if js/isMobile
+     (reset! (:click-task db) audio/pause)
+     (audio/pause))
+   {}))
 
  ;;;
 ;;; pause player
@@ -265,5 +300,7 @@
  (interceptors-fx :spec false)
 
  (fn [{:keys [db]}]
-   (let [audio (.getElementById js/document "audio-player")]
-     (.play audio))))
+   (if js/isMobile
+     (reset! (:click-task db) audio/play)
+     (audio/play))
+   {}))

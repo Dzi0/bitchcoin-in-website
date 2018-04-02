@@ -36,33 +36,56 @@
 
 (defn ^:export init []
   (.log js/console "init")
-  (.addEventListener js/window
-                     "load"
-                     (fn []
-                       (re-frame/dispatch-sync [:initialize])
-                       (mount-root)
-                       (.. (js/$ "article a")                           
-                           (click (fn [e]
-                                    (let [target (.-target e)
-                                          href (.. ($target target)
-                                                   (attr "href"))]
-                                      (console :log :a-clicked href)
-                                      (re-frame/dispatch-sync [:ui.text/click href])
-                                      (.stopPropagation e)
-                                      false))))
+  (.addEventListener
+   js/window
 
-                       (.. (js/$ "#pause-button")
-                           (click (fn [e]
-                                    (let [target (.-target e)]
-                                      (console :log :pause-button-clicked)
+   "load"
+   (fn []
+     (let [click-task (atom
+                       (fn []
+                         (console :log :default-click-task)))]
+         (re-frame/dispatch-sync [:initialize click-task])
+      (mount-root)
+      (.. (js/$ "article a")                           
+          (click (fn [e]
+                   (let [target (.-target e)
+                         href (.. ($target target)
+                                  (attr "href"))]
+                     (console :log :a-clicked href)
+                     (re-frame/dispatch-sync [:ui.text/click href])
+                     (js/setTimeout #(@click-task) 200)
+                     (.stopPropagation e)
+                     false))))
 
-                                      (re-frame/dispatch-sync [:ui.pause/click])
-                                      (.stopPropagation e)
-                                      true))))
+      (.. (js/$ ".playlist button")
+          (click (fn [e]
+                   (js/setTimeout #(@click-task) 200)
+                   #_(.stopPropagation e)
+                   true)))
 
-                       (.. (js/$ "#audio-player")
-                           (on "ended"
-                               (fn [e]
-                                 (console :log :audio-ended)
-                                 (re-frame/dispatch-sync [:player/play-next])))))))
+      (.. (js/$ "#splash h1")
+          (click (fn [e]
+                   (console :log :splash-clicked)
+                   (re-frame/dispatch-sync [:ui.splash/click])
+                   (js/setTimeout #(@click-task) 200)
+                   (.stopPropagation e)
+                   false)))
+
+      (.. (js/$ "#pause-button")
+          (click (fn [e]
+                   (let [target (.-target e)]
+                     (console :log :pause-button-clicked)
+
+                     (re-frame/dispatch-sync [:ui.pause/click])
+
+                     (js/setTimeout #(@click-task) 200)                     
+
+                     (.stopPropagation e)
+                     true))))
+
+      (.. (js/$ "#audio-player")
+          (on "ended"
+              (fn [e]
+                (console :log :audio-ended)
+                (re-frame/dispatch-sync [:player/play-next]))))))))
 
