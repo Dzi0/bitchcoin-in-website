@@ -56,7 +56,7 @@
                                     (let [target (.-target e)]
                                       (console :log :pause-button-clicked)
 
-                                      (re-frame/dispatch-sync [:player/do-toggle-pause])
+                                      (re-frame/dispatch-sync [:ui.pause/click])
                                       (.stopPropagation e)
                                       true))))
 

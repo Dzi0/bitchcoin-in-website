@@ -28,6 +28,10 @@
    {:db (db/default-db)
     :dispatch [:player/change-song 0]}))
 
+
+;;;
+;;; when playlist button is clicked
+;;;
 (reg-event-fx
  :ui.playlist/click
 
@@ -85,10 +89,63 @@
      {:db db
       :dispatch [:player/change-song song-id]})))
 
+;;;
+;;;
+;;; UI / PAUSE BUTTON  EVENTS
+;;;
+;;;
+
+;;;
+;;; click on pause button
+;;;
+(reg-event-fx
+ :ui.pause/click
+
+ (interceptors-fx :spec true)
+
+ (fn [{:keys [db]}]
+   (let [was-paused? (get db :paused?)]
+     {:db (update db :paused? not)
+      :dispatch-n (if was-paused?
+                    [[:ui.pause/set-playing]
+                     [:player.pause/play]]
+
+                    [[:ui.pause/set-paused]
+                     [:player.pause/pause]])})))
+
+;;;
+;;; change status to playing
+;;;
+(reg-event-fx
+ :ui.pause/set-playing
+
+ (interceptors-fx :spec false)
+
+ (fn [{:keys [db]}]
+   (let [$pause-button ($ :#pause-button)]
+     (jq/remove-class $pause-button "paused")
+
+     {})))
+
+
+;;;
+;;; change status to paused
+;;;
+(reg-event-fx
+ :ui.pause/set-paused
+
+ (interceptors-fx :spec false)
+
+ (fn [{:keys [db]}]
+   (let [$pause-button ($ :#pause-button)]
+     (jq/add-class $pause-button "paused")
+
+     {})))
+
 
 ;;;
 ;;;
-;;; player events
+;;; HTML5  PLAYER EVENTS
 ;;;
 ;;;
 
@@ -130,14 +187,14 @@
 (reg-event-fx
  :player/change-song
 
- (interceptors-fx :spec false)
+ (interceptors-fx :spec true)
 
  (fn [{:keys [db]} [next-song-id]]
    (console :log :changing-to next-song-id)
 
    (let [cur-song-id (:id (first (filter #(:active? %) (vals (:playlist db)))))]
-     {:db db
-      :dispatch-n (cond-> []
+     {:db (assoc db :paused? false)
+      :dispatch-n (cond-> [[:ui.pause/set-playing]]
                     cur-song-id
                     (conj [:player/stop cur-song-id])
 
@@ -188,22 +245,25 @@
 
 
 ;;;
-;;; toggle pause
+;;; pause player
 ;;;
 (reg-event-fx
- :player/do-toggle-pause
+ :player.pause/pause
 
- (interceptors-fx :spec true)
+ (interceptors-fx :spec false)
 
  (fn [{:keys [db]}]
-   (let [paused? (get db :paused?)
-         audio (.getElementById js/document "audio-player")
-         $pause-button ($ :#pause-button)]
-     (if paused?
-       (do
-         (.play audio)
-         (jq/remove-class $pause-button "paused"))
-       (do
-         (.pause audio)
-         (jq/add-class $pause-button "paused")))
-     {:db (update db :paused? not)})))
+   (let [audio (.getElementById js/document "audio-player")]
+     (.pause audio))))
+
+ ;;;
+;;; pause player
+;;;
+(reg-event-fx
+ :player.pause/play
+
+ (interceptors-fx :spec false)
+
+ (fn [{:keys [db]}]
+   (let [audio (.getElementById js/document "audio-player")]
+     (.play audio))))

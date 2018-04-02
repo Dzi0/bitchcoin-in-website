@@ -10,14 +10,14 @@
         paused? (subscribe [:db/paused?])]
     (fn []
       [:ul.playlist
-       (map #(with-meta
-               [:li
-                {:class [(when (:active? %1) "active")
-                         (when (and (:active? %1) @paused?) "paused")]
-                 }
-                [:button
-                 {:on-click (fn []
-                              (dispatch [:ui.playlist/click (:id %1)]))}]]
-               {:key %2})
-            @songs
-            (range))])))
+       (doall (map #(with-meta
+                [:li
+                 {:class [(when (:active? %1) "active")
+                          (when (and (:active? %1) @paused?) "paused")]
+                  }
+                 [:button
+                  {:on-click (fn []
+                               (dispatch [:ui.playlist/click (:id %1)]))}]]
+                {:key %2})
+             @songs
+             (range)))])))
