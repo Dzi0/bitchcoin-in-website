@@ -6,12 +6,15 @@
    [bitchcoin-in-website.subs]))
 
 (defn playlist-view []
-  (let [songs (subscribe [:db.songs/all])]
+  (let [songs (subscribe [:db.songs/all])
+        paused? (subscribe [:db/paused?])]
     (fn []
       [:ul.playlist
        (map #(with-meta
                [:li
-                {:class (when (:active? %1) "active")}
+                {:class [(when (:active? %1) "active")
+                         (when (and (:active? %1) @paused?) "paused")]
+                 }
                 [:button
                  {:on-click (fn []
                               (dispatch [:ui.playlist/click (:id %1)]))}]]

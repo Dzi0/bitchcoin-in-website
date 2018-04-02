@@ -102,6 +102,45 @@ body {
       text-decoration: line-through solid $secondary-color;
     }
   }
+
+  #pause-button {
+    // background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUxcHgiIGhlaWdodD0iMjEzcHgiIHZpZXdCb3g9IjAgMCAxNTEgMjEzIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogICAgPCEtLSBHZW5lcmF0b3I6IFNrZXRjaCA0OC4yICg0NzMyNykgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+cGF1c2UoMSk8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz48L2RlZnM+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0icGF1c2UoMSkiIGZpbGw9IiNGRkZGRkYiIGZpbGwtcnVsZT0ibm9uemVybyI+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNy42NjcsMC4xMTcgQzguMzE3LDAuMTE3IDAuNjY3LDcuNzY3IDAuNjY3LDE3LjExNyBMMC42NjcsMTk1LjYxNyBDMC42NjcsMjA0Ljk2NyA4LjMxNywyMTIuNjE3IDE3LjY2NywyMTIuNjE3IEMyNy4wMTcsMjEyLjYxNyAzNC42NjcsMjA0Ljk2NyAzNC42NjcsMTk1LjYxNyBMMzQuNjY3LDE3LjExNyBDMzQuNjY3LDcuNzY3IDI3LjAxNywwLjExNyAxNy42NjcsMC4xMTcgWiIgaWQ9IlNoYXBlIj48L3BhdGg+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0xMzMuODMzLDAuMTE3IEMxMjQuNDgzLDAuMTE3IDExNi44MzMsNy43NjcgMTE2LjgzMywxNy4xMTcgTDExNi44MzMsMTk1LjYxNyBDMTE2LjgzMywyMDQuOTY3IDEyNC40ODMsMjEyLjYxNyAxMzMuODMzLDIxMi42MTcgQzE0My4xODMsMjEyLjYxNyAxNTAuODMzLDIwNC45NjcgMTUwLjgzMywxOTUuNjE3IEwxNTAuODMzLDE3LjExNyBDMTUwLjgzMyw3Ljc2NyAxNDMuMTgzLDAuMTE3IDEzMy44MzMsMC4xMTcgWiIgaWQ9IlNoYXBlIj48L3BhdGg+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=");
+
+    // // background: url(../images/pause.svg);
+    // background-size: 50% 50%;
+    // background-position: center;
+    // background-repeat: no-repeat;
+
+    @include circle(0.75em);
+
+    @include breakpoint(medium) {
+      @include circle(1em);
+    }
+
+    cursor: pointer;
+    border: 1px solid white;
+    position: relative;
+
+    &:focus {
+      outline:0;
+    }
+
+    left: 5px;
+    top: 5px;
+
+    svg {
+      width: 0.6em;
+      height: 0.6em;
+
+      @include absolute-center;
+    }
+
+    &.paused {
+      svg g {
+        fill: $secondary-color;
+      }
+    }
+  }
 }
 
 article {
@@ -180,6 +219,17 @@ ul.playlist {
         -o-animation: bkg-color-change 0.2s infinite;
         -ms-animation: bkg-color-change 0.23s infinite;
         animation: bkg-color-change 0.2s infinite;
+      }
+    }
+
+    &.paused {
+      button {
+        background-color: $secondary-color;
+        -webkit-animation: none;
+        -moz-animation: none;
+        -o-animation: none;
+        -ms-animation: none;
+        animation: none;
       }
     }
   }

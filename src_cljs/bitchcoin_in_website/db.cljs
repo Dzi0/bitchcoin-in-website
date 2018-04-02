@@ -21,6 +21,8 @@
 (s/def ::active-song-id (s/or :nil nil?
                               :int int?))
 
+(s/def ::paused? boolean?)
+
 (s/def ::song (s/keys :req-un [::id
                                ::url
                                ::active?]))
@@ -28,7 +30,8 @@
 (s/def ::playlist (s/map-of ::id ::song))
 
 (s/def ::db (s/keys :req-un [::playlist
-                             ::active-song-id]))
+                             ::active-song-id
+                             ::paused?]))
 
 ;;;
 ;;;
@@ -46,7 +49,8 @@
 
 (defn- default-db []
   {:playlist (default-playlist)
-   :active-song-id nil})
+   :active-song-id nil
+   :paused? false})
 
 
 ;;;

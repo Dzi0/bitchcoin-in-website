@@ -2,7 +2,9 @@
   (:require
    [re-frame.core :refer [reg-event-db reg-event-fx path trim-v after debug reg-fx console dispatch]]
 
-   [bitchcoin-in-website.db :as db]
+   [jayq.core :as jq :refer [$ css html outer-height attr]]
+
+    [bitchcoin-in-website.db :as db]
 
    [bitchcoin-in-website.interceptors :refer [interceptors
                                               interceptors-fx]]))
@@ -183,3 +185,25 @@
      (.load audio)
      (.play audio))
    {}))
+
+
+;;;
+;;; toggle pause
+;;;
+(reg-event-fx
+ :player/do-toggle-pause
+
+ (interceptors-fx :spec true)
+
+ (fn [{:keys [db]}]
+   (let [paused? (get db :paused?)
+         audio (.getElementById js/document "audio-player")
+         $pause-button ($ :#pause-button)]
+     (if paused?
+       (do
+         (.play audio)
+         (jq/remove-class $pause-button "paused"))
+       (do
+         (.pause audio)
+         (jq/add-class $pause-button "paused")))
+     {:db (update db :paused? not)})))
