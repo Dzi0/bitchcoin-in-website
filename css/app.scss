@@ -5,6 +5,7 @@
 @import "foundation";
 
 
+
 @include foundation-global-styles;
 @include foundation-grid;
 @include foundation-typography;
@@ -119,7 +120,7 @@ body {
 
     cursor: pointer;
     border: 1px solid white;
-    position: relative;
+    position: fixed;
 
     &:focus {
       outline:0;
