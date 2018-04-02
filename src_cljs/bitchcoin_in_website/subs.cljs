@@ -16,3 +16,9 @@
 
  (fn [playlist _]
    (sort-by :id #(compare %1 %2) (vals playlist))))
+
+(reg-sub
+ :db/paused?
+
+ (fn [db]
+   (:paused? db)))
