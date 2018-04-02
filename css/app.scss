@@ -130,8 +130,13 @@ body {
     top: 5px;
 
     svg {
-      width: 0.6em;
-      height: 0.6em;
+      width: 0.5em;
+      height: 0.5em;
+
+      @include breakpoint(medium) {
+        width: 0.6em;
+        height: 0.6em;
+      }
 
       @include absolute-center;
     }
