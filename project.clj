@@ -38,9 +38,9 @@
                           :source-paths ["src_cljs"]
                           :figwheel {:on-jsload "bitchcoin-in-website.core/mount-root"}
                           :compiler {:main ^:skip-aot bitchcoin-in-website.core
-                                     :output-to "js/compiled/out/main.js" ; FIXME
-                                     :output-dir "resources/public/js/compiled/out"
-                                     :asset-path "/js/compiled/out"
+                                     :output-to "js/compiled/main.js" ; FIXME
+                                     :output-dir "resources/public/js/compiled"
+                                     :asset-path "/js/compiled"
                                      :source-map-timestamp true
                                      :optimizations :none
                                      :externs ["externs/jquery-3.3.js"]
@@ -61,7 +61,8 @@
                     :source-paths ["src_cljs"]
                     :compiler {:main bitchcoin-in-website.core
                                :output-to "resources/public/js/compiled/main.js"
-                               :optimizations :simple
-                               :pretty-print true
+                               :optimizations :advanced
+                               :pretty-print false
+                               :externs ["externs/jquery-3.3.js"]
                                :pseudo-names true}}}}}
    })
