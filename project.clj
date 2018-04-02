@@ -43,6 +43,7 @@
                                      :asset-path "/js/compiled/out"
                                      :source-map-timestamp true
                                      :optimizations :none
+                                     :externs ["externs/jquery-3.3.js"]
                                      :preloads [devtools.preload]
                                      :closure-defines {goog.DEBUG true}}}]}
 
