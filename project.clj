@@ -36,7 +36,8 @@
     ;;
     :cljsbuild {:builds [{:id "dev"
                           :source-paths ["src_cljs"]
-                          :figwheel {:on-jsload "bitchcoin-in-website.core/mount-root"}
+                          :figwheel {:websocket-host :js-client-host
+                                     :on-jsload "bitchcoin-in-website.core/mount-root"}
                           :compiler {:main ^:skip-aot bitchcoin-in-website.core
                                      :output-to "js/compiled/main.js" ; FIXME
                                      :output-dir "resources/public/js/compiled"
