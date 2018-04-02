@@ -21,6 +21,14 @@
     <script src="js/compiled/main.js"></script>
   </head>
   <body>
+    <div id="splash">
+      <h1>
+        ENTER
+      </h1>
+    </div>
+    <script>
+     isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    </script>
     <div id="pause-button"><svg width="151px" height="213px" viewBox="0 0 151 213" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <title>pause</title>
       <defs></defs>
@@ -32,7 +40,7 @@
       </g>
     </svg>
     </div>
-    <audio id="audio-player" class="audio-controls" controls="controls">
+    <audio id="audio-player" class="audio-controls" controls="false" preload="auto">
     <!-- <source src="track.ogg" type="audio/ogg" /> --> <source id="mp3-src"
                                                                  src="music/Not%20Waving%20-%20Me%20Me%20Me.mp3"
                                                                  type="audio/mpeg" />
