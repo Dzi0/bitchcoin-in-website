@@ -87,5 +87,5 @@
           (on "ended"
               (fn [e]
                 (console :log :audio-ended)
-                (re-frame/dispatch-sync [:player/play-next]))))))))
+                (re-frame/dispatch-sync [:player/play-next true]))))))))
 

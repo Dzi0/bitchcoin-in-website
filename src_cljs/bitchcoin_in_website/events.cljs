@@ -30,7 +30,7 @@
    (cond-> {:db (db/default-db click-task-atom)}
      (not js/isMobile)
      (merge {:dispatch-n [[:ui.splash/hide]
-                          [:player/change-song 0]]}))))
+                          [:player/change-song 0 false]]}))))
      ;; TODO: if not mobile start here!
                                         ;:dispatch [:player/change-song 0]
 
@@ -48,7 +48,7 @@
    (console :log :clicked song-id)
 
    {:db db
-    :dispatch [:player/change-song song-id]}))
+    :dispatch [:player/change-song song-id false]}))
 
 
 ;;;
@@ -93,7 +93,7 @@
 
    (let [song-id (:id (db/song-by-url db song-url))]
      {:db db
-      :dispatch [:player/change-song song-id]})))
+      :dispatch [:player/change-song song-id false]})))
 
 ;;;
 ;;;
@@ -161,7 +161,7 @@
 
  (fn [{:keys [db]}]
    {:dispatch-n [[:ui.splash/hide]
-                 [:player/change-song 0]]}))
+                 [:player/change-song 0 false]]}))
 
 (reg-event-fx
  :ui.splash/hide
@@ -188,12 +188,12 @@
 
  (interceptors-fx :spec true)
 
- (fn [{:keys [db]} [song-id]]
+ (fn [{:keys [db]} [song-id force?]]
    (console :log :started song-id)
 
    {:db (-> db
             (update-in [:playlist song-id :active?] not))
-    :dispatch-n [[:player/do-start song-id]
+    :dispatch-n [[:player/do-start song-id force?]
                  [:ui.text/activate-link song-id]]}))
 
 ;;;
@@ -220,7 +220,7 @@
 
  (interceptors-fx :spec true)
 
- (fn [{:keys [db]} [next-song-id]]
+ (fn [{:keys [db]} [next-song-id force?]]
    (console :log :changing-to next-song-id)
 
    (let [cur-song-id (:id (first (filter #(:active? %) (vals (:playlist db)))))]
@@ -230,7 +230,7 @@
                     (conj [:player/stop cur-song-id])
 
                     true
-                    (conj [:player/start next-song-id]))})))
+                    (conj [:player/start next-song-id force?]))})))
 
 ;;;
 ;;; play next
@@ -240,7 +240,7 @@
 
  (interceptors-fx :spec :false)
 
- (fn [{:keys [db]}]
+ (fn [{:keys [db]} [force?]]
    (let [songs (vals (:playlist db))
          cur-song-id (:id (first (filter #(:active? %) songs)))
          last-song-id (:id (last (sort-by :id #(compare %1 %2) songs)))
@@ -254,7 +254,7 @@
                         :else
                         (inc cur-song-id))]
      {:db db
-      :dispatch [:player/change-song next-song-id]})))
+      :dispatch [:player/change-song next-song-id force?]})))
 
 ;;;
 ;;;
@@ -266,13 +266,13 @@
 
  (interceptors-fx :spec false)
 
- (fn [{:keys [db]} [song-id]]
+ (fn [{:keys [db]} [song-id force?]]
    (let [url (get-in db [:playlist song-id :url])]
      (console :log :player/do-start url)
      
-     (if js/isMobile
-       (reset! (:click-task db) (fn [] (audio/load-and-play url)))
-       (audio/load-and-play url))
+     (if (or force? (not js/isMobile))
+       (audio/load-and-play url)
+       (reset! (:click-task db) (fn [] (audio/load-and-play url))))
      {}
      #_(db/set-click-task db (partial audio/load-and-play url)))))
 
